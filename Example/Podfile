@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'MJThirdManager_Example' do
+  pod 'MJThirdManager', :path => '../'
+
+  target 'MJThirdManager_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
