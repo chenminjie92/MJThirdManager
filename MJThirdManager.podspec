@@ -28,4 +28,5 @@ Pod::Spec.new do |spec|
   spec.source_files      = 'MJThirdManager/**/*.{h,m,swift}'
   spec.dependency        'WeiXinSDK_Swift'
   spec.dependency        'AlipaySDK_NoUTDID_Swift'
+  spec.pod_target_xcconfig = { 'VALID_ARCHS' => 'x86_64 armv7 arm64' }
 end
