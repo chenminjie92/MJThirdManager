@@ -12,7 +12,7 @@ import AuthenticationServices
 public protocol MJLoginManagerProtocol: NSObjectProtocol {
     
     /// 登录结果
-    func onLoginComplete(_ resultStatus: MJLoginManager.ResultStatus)
+    func onLoginComplete(_ resultStatus: MJLoginManager.ResultStatus, platform: MJLoginManager.Platform?)
 }
 
 public class MJLoginManager: NSObject {
@@ -36,6 +36,7 @@ public class MJLoginManager: NSObject {
         /// 未知
         case unknown
     }
+    var platform: Platform?
     
     /// 代理组
     fileprivate var delegates: NSHashTable<AnyObject> = NSHashTable.weakObjects()
@@ -57,6 +58,7 @@ extension MJLoginManager {
     /// 登录
     /// - Parameter platform: 登录的平台
     public func login(platform: Platform) {
+        self.platform = platform
         switch platform {
         case .weixin(let scope, let state):
             weiXinLogin(scope: scope, state: state)
@@ -114,8 +116,9 @@ extension MJLoginManager {
             status = .fail
         }
         invoke { (delegate) in
-            delegate.onLoginComplete(status)
+            delegate.onLoginComplete(status, platform: self.platform)
         }
+        self.platform = nil
     }
     
     /// 发起苹果登录
@@ -159,12 +162,13 @@ extension MJLoginManager: ASAuthorizationControllerDelegate, ASAuthorizationCont
                 name = userName
             }
             invoke { (delegate) in
-                delegate.onLoginComplete(.success(token: identityTokenStr, userId: _appleIDCredential.user, nikeName: name))
+                delegate.onLoginComplete(.success(token: identityTokenStr, userId: _appleIDCredential.user, nikeName: name), platform:self.platform)
             }
         }
         else{
             // "授权信息不符合"
         }
+        self.platform = nil
     }
     
     // 授权失败的回调
@@ -187,8 +191,9 @@ extension MJLoginManager: ASAuthorizationControllerDelegate, ASAuthorizationCont
             break;
         }
         invoke { (delegate) in
-            delegate.onLoginComplete(status)
+            delegate.onLoginComplete(status, platform: self.platform)
         }
+        self.platform = nil
     }
 }
 

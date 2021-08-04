@@ -65,9 +65,10 @@ extension MJThirdManager {
 }
 extension MJThirdManager {
     
-    ///  需要在 application:openURL:sourceApplication:annotation:或者application:handleOpenURL中调用。 func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>)
+    ///  需要在 application:openURL:sourceApplication:annotation:或者application:handleOpenURL中调用。
     /// - Parameter url: 第三方应用时传递过来的URL
     /// - Returns: 成功返回YES，失败返回NO
+    @discardableResult
     public static func handleOpenUrl(url:URL) -> Bool {
         MJThirdManager.shared.invoke { (delegate) in
             delegate.handleOpenUrl(url: url)
@@ -79,6 +80,7 @@ extension MJThirdManager {
     }
         
     ///处理微信通过 通用链接 启动App时传递的数据
+    @discardableResult
     public static func handleOpenUniversalLink(activity: NSUserActivity) -> Bool {
         return WXApi.handleOpenUniversalLink(activity, delegate: MJThirdManager.shared)
     }

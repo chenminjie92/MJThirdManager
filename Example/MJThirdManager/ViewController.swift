@@ -74,7 +74,7 @@ extension ViewController: MJPayManagerProtocol {
 
 extension ViewController: MJLoginManagerProtocol {
     
-    func onLoginComplete(_ resultStatus: MJLoginManager.ResultStatus) {
+    func onLoginComplete(_ resultStatus: MJLoginManager.ResultStatus, platform: MJLoginManager.Platform?) {
         print(resultStatus)
     }
     

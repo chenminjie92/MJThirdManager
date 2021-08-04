@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name              = "MJThirdManager"
-  spec.version           = '1.0.0'
+  spec.version           = '1.0.1'
   spec.swift_versions    = '5.0'
   spec.license           = { :type => 'MIT', :text => <<-LICENSE
                               Copyright 2019
